@@ -228,11 +228,123 @@ const TestimonialCarousel = () => {
   );
 };
 
+const TeamCard = ({ url, name, role }: { url: string; name: string; role: string }) => (
+  <div className="group bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-100 h-full mx-2">
+    <div className="aspect-[4/5] overflow-hidden relative">
+      <img 
+        src={url} 
+        alt={name} 
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        referrerPolicy="no-referrer"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    </div>
+    <div className="p-8 text-center">
+      <h4 className="text-xl font-bold text-navy mb-1">{name}</h4>
+      <p className="text-orange text-xs font-black uppercase tracking-widest">{role}</p>
+    </div>
+  </div>
+);
+
+const TeamCarousel = () => {
+  const team = [
+    { url: "https://i.postimg.cc/JnKc1KYv/ymei-team.jpg", name: "Group Pictures", role: "Leadership" },
+    { url: "https://i.postimg.cc/0QZd8ZXX/ymei-team-2.jpg", name: "Group Pictures", role: "Leadership" },
+    { url: "https://i.postimg.cc/mDVNbVp8/ymei-team-3.jpg", name: "Group Pictures", role: "Leadership" },
+    { url: "https://i.postimg.cc/fL5jw5qH/ymei-team-4.jpg", name: "Group Pictures", role: "Leadership" },
+    { url: "https://i.postimg.cc/W3S62SYG/ymei-team-5.jpg", name: "Group Pictures", role: "Leadership" }
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setItemsToShow(3);
+      } else if (window.innerWidth >= 768) {
+        setItemsToShow(2);
+      } else {
+        setItemsToShow(1);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxIndex = Math.max(0, team.length - itemsToShow);
+  
+  const next = () => {
+    setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
+  };
+
+  const prev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
+  };
+
+  return (
+    <div className="relative max-w-7xl mx-auto px-4">
+      <div className="overflow-hidden py-8">
+        <motion.div
+          className="flex"
+          animate={{ x: `-${currentIndex * (100 / itemsToShow)}%` }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        >
+          {team.map((member, i) => (
+            <div 
+              key={i} 
+              className="px-2 shrink-0"
+              style={{ width: `${100 / itemsToShow}%` }}
+            >
+              <TeamCard {...member} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Navigation Controls */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-1 md:-mx-20 pointer-events-none">
+        <button
+          onClick={prev}
+          className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-navy hover:bg-orange hover:text-white transition-all pointer-events-auto active:scale-90"
+        >
+          <ArrowRight size={16} className="rotate-180 md:w-6 md:h-6" />
+        </button>
+        <button
+          onClick={next}
+          className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-navy hover:bg-orange hover:text-white transition-all pointer-events-auto active:scale-90"
+        >
+          <ArrowRight size={16} className="md:w-6 md:h-6" />
+        </button>
+      </div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-4">
+        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentIndex(i)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              i === currentIndex ? "bg-orange w-8" : "bg-slate-200 hover:bg-orange/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [activeGalleryTab, setActiveGalleryTab] = useState('All');
+  const [showAllGallery, setShowAllGallery] = useState(false);
+
+  useEffect(() => {
+    setShowAllGallery(false);
+  }, [activeGalleryTab]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -461,7 +573,7 @@ export default function App() {
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-navy rounded-full blur-3xl opacity-10" />
             
             <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-2xl shadow-xl z-20 border border-slate-100 min-w-[240px] text-center">
-              <p className="text-navy font-black text-lg">Gracious O. Opeyemi</p>
+              <p className="text-navy font-black text-lg">Gracious Oluwagbemiga Opeyemi</p>
               <p className="text-orange text-xs font-bold uppercase tracking-widest">Founder & Executive Director</p>
             </div>
           </Reveal>
@@ -494,7 +606,7 @@ export default function App() {
               </div>
               
               <div className="flex gap-4 pt-4">
-                <a href="#" className="w-12 h-12 rounded-xl bg-navy text-white flex items-center justify-center hover:bg-orange transition-colors">
+                <a href="https://www.linkedin.com/in/gracious-knaan" className="w-12 h-12 rounded-xl bg-navy text-white flex items-center justify-center hover:bg-orange transition-colors">
                   <Linkedin size={20} />
                 </a>
                 <a href="#" className="w-12 h-12 rounded-xl bg-navy text-white flex items-center justify-center hover:bg-orange transition-colors">
@@ -718,7 +830,7 @@ export default function App() {
               desc: "Impactful community outreach and support programs.",
               category: "2.0"
             }
-          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).map((item, idx) => (
+          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).slice(0, showAllGallery ? undefined : 9).map((item, idx) => (
             <Reveal key={idx} delay={idx * 0.1}>
               <motion.div 
                 layout
@@ -747,6 +859,35 @@ export default function App() {
             </div>
           )}
         </div>
+
+        {/* Show All Button */}
+        {!showAllGallery && [
+            { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" },
+            { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }
+          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).length > 9 && (
+          <div className="flex justify-center mt-12">
+            <button 
+              onClick={() => setShowAllGallery(true)}
+              className="bg-navy text-white px-10 py-4 rounded-full font-bold shadow-xl hover:bg-orange transition-all hover:scale-105 active:scale-95 flex items-center gap-3"
+            >
+              Show All Pictures <ArrowRight size={20} />
+            </button>
+          </div>
+        )}
+
+        {showAllGallery && [
+            { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" },
+            { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }
+          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).length > 9 && (
+          <div className="flex justify-center mt-12">
+            <button 
+              onClick={() => setShowAllGallery(false)}
+              className="bg-slate-100 text-navy px-10 py-4 rounded-full font-bold hover:bg-slate-200 transition-all flex items-center gap-3"
+            >
+              Show Less
+            </button>
+          </div>
+        )}
       </section>
 
       {/* Testimonials */}
@@ -797,33 +938,7 @@ export default function App() {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 max-w-7xl mx-auto">
-          {[
-            { url: "https://i.postimg.cc/JnKc1KYv/ymei-team.jpg", name: "Group Pictures", role: "Leadership" },
-            { url: "https://i.postimg.cc/0QZd8ZXX/ymei-team-2.jpg", name: "Group Pictures", role: "Leadership" },
-            { url: "https://i.postimg.cc/mDVNbVp8/ymei-team-3.jpg", name: "Group Pictures", role: "Leadership" },
-            { url: "https://i.postimg.cc/fL5jw5qH/ymei-team-4.jpg", name: "Group Pictures", role: "Leadership" },
-            { url: "https://i.postimg.cc/W3S62SYG/ymei-team-5.jpg", name: "Group Pictures", role: "Leadership" }
-          ].map((member, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <div className="group bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-100">
-                <div className="aspect-[4/5] overflow-hidden relative">
-                  <img 
-                    src={member.url} 
-                    alt={member.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                <div className="p-8 text-center">
-                  <h4 className="text-xl font-bold text-navy mb-1">{member.name}</h4>
-                  <p className="text-orange text-xs font-black uppercase tracking-widest">{member.role}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <TeamCarousel />
       </section>
 
       {/* Contact */}
@@ -919,8 +1034,8 @@ export default function App() {
               {[
                 { icon: Facebook, href: "#" },
                 { icon: Twitter, href: "#" },
-                { icon: Instagram, href: "#" },
-                { icon: Linkedin, href: "#" }
+                { icon: Instagram, href: "https://www.instagram.com/youngmindempowermentinitiative" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/gracious-knaan" }
               ].map((social, i) => (
                 <a 
                   key={i} 
