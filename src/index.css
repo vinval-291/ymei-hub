@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --color-navy: #0A3D62;
+  --color-orange: #FF9800;
+  --color-yellow: #FFD65A;
+  --color-light: #F8FAFC;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-slate-700 bg-white overflow-x-hidden;
+  }
+}
+
+@keyframes slow-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+.animate-slow-zoom {
+  animation: slow-zoom 20s infinite alternate ease-in-out;
+}
+
+.leadership-tree-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.leadership-tree-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.leadership-tree-wrapper::-webkit-scrollbar-thumb {
+  background: #FF9800;
+  border-radius: 10px;
+}
+
+/* Custom selection color */
+::selection {
+  background-color: rgba(255, 152, 0, 0.3);
+  color: #0A3D62;
+}
