@@ -3,8 +3,8 @@
 
 @theme {
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --color-navy: #0A3D62;
-  --color-orange: #FF9800;
+  --color-navy: #002147;
+  --color-orange: #F9A61A;
   --color-yellow: #FFD65A;
   --color-light: #F8FAFC;
 }
@@ -34,12 +34,12 @@
   background: #f1f1f1;
 }
 .leadership-tree-wrapper::-webkit-scrollbar-thumb {
-  background: #FF9800;
+  background: #F9A61A;
   border-radius: 10px;
 }
 
 /* Custom selection color */
 ::selection {
-  background-color: rgba(255, 152, 0, 0.3);
-  color: #0A3D62;
+  background-color: rgba(249, 166, 26, 0.3);
+  color: #002147;
 }

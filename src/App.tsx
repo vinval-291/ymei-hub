@@ -9,7 +9,7 @@ import {
   Menu, X, Check, MapPin, Phone, 
   Facebook, Twitter, Instagram, Linkedin, 
   ArrowRight, Quote, MessageSquare, 
-  ChevronUp, Mail, Send
+  ChevronUp, Mail, Send, Users, GraduationCap
 } from 'lucide-react';
 
 // --- Components ---
@@ -232,6 +232,7 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [activeGalleryTab, setActiveGalleryTab] = useState('All');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -262,10 +263,13 @@ export default function App() {
       <nav className={`fixed top-0 w-full flex justify-between items-center px-[8%] py-4 z-[2000] transition-all duration-500 ${
         scrolled ? 'bg-white/90 backdrop-blur-md shadow-xl shadow-black/5 py-3' : 'bg-transparent py-5'
       }`}>
-        <a href="#" className={`font-extrabold text-3xl tracking-tighter transition-colors duration-500 ${
-          scrolled ? 'text-navy' : 'text-white'
-        }`}>
-          YME<span className="text-orange">I</span>
+        <a href="#" className="transition-transform duration-500 hover:scale-105">
+          <img 
+            src="https://i.postimg.cc/mZ1XBWyk/ymei_logo.jpg" 
+            alt="YMEI Logo" 
+            className="h-12 md:h-14 w-auto object-contain rounded-lg"
+            referrerPolicy="no-referrer"
+          />
         </a>
         
         <div className="hidden lg:flex items-center gap-8">
@@ -436,6 +440,72 @@ export default function App() {
         </div>
       </section>
 
+      {/* Founder Section */}
+      <section id="founder" className="py-16 md:py-24 px-[8%] bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+          <Reveal className="relative">
+            <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
+              <img 
+                src="https://i.postimg.cc/J016xGvF/Gracious-Khaan-(YMEI-Founder).png" 
+                alt="Gracious Oluwagbemiga Opeyemi - YMEI Founder" 
+                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            {/* Decorative elements */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange rounded-full blur-3xl opacity-20" />
+            <div className="absolute -top-6 -left-6 w-32 h-32 bg-navy rounded-full blur-3xl opacity-10" />
+            
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-2xl shadow-xl z-20 border border-slate-100 min-w-[240px] text-center">
+              <p className="text-navy font-black text-lg">Gracious O. Opeyemi</p>
+              <p className="text-orange text-xs font-bold uppercase tracking-widest">Founder & Executive Director</p>
+            </div>
+          </Reveal>
+          
+          <Reveal delay={0.2}>
+            <div className="space-y-6 md:space-y-8">
+              <div className="inline-block px-4 py-1.5 bg-orange/10 text-orange rounded-full text-xs font-black uppercase tracking-widest mb-2">
+                Meet the Visionary
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-navy leading-tight">
+                Leading the charge for <span className="text-orange text-shadow-sm">Youth Empowerment</span>
+              </h2>
+              
+              <div className="space-y-4 text-slate-600 text-base md:text-lg leading-relaxed">
+                <p>
+                  Gracious Oluwagbemiga Opeyemi is a Nigerian social entrepreneur, youth development advocate, and Co-Founder/Executive Director of Young Minds Empowerment Initiatives (YMEI), a youth-led nonprofit advancing education-to-skill pathways across underserved communities.
+                </p>
+                <p>
+                  He has led impactful programs in partnership with public schools and the Ministry of Education, reaching over 10,000 students across 28 schools, with hundreds gaining hands-on experience in digital and entrepreneurial skills such as web development, graphic design, and photography.
+                </p>
+                <p>
+                  A trained psychologist from the University of Ibadan and an alumnus of the Lagos Business School, Gracious is passionate about bridging the gap between education, skills, and employability for young people.
+                </p>
+                <p>
+                  He also leads a Pan-African Youth4Youth mentorship community and has worked with organizations such as CcHub Nigeria and YNaija to drive youth-focused initiatives.
+                </p>
+                <p className="font-semibold text-navy">
+                  Gracious is a recipient of multiple recognitions, including the LinkedIn Local Nigeria Social Impact Award (2025) and the Nigeria Youth SDGs Network Top 10 Changemakers Award (2025).
+                </p>
+              </div>
+              
+              <div className="flex gap-4 pt-4">
+                <a href="#" className="w-12 h-12 rounded-xl bg-navy text-white flex items-center justify-center hover:bg-orange transition-colors">
+                  <Linkedin size={20} />
+                </a>
+                <a href="#" className="w-12 h-12 rounded-xl bg-navy text-white flex items-center justify-center hover:bg-orange transition-colors">
+                  <Twitter size={20} />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Stats */}
       <div className="bg-navy py-12 md:py-16 px-[8%] grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -496,48 +566,168 @@ export default function App() {
       {/* Gallery Section */}
       <section id="gallery" className="py-12 md:py-20 px-[8%] bg-white">
         <Reveal className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4">Impact in Action</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4">Book2Skills Programs</h2>
           <div className="w-24 h-2 bg-orange mx-auto rounded-full" />
           <p className="mt-6 text-slate-500 max-w-2xl mx-auto text-base md:text-lg">
-            A glimpse into our humanitarian activities and community outreach programs across Nigeria.
+            Capturing the impact of our Book2Skills 1.0, 2.0, and 3.0 initiatives across various communities.
           </p>
         </Reveal>
+
+        {/* Gallery Tabs */}
+        <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap md:justify-center mb-12">
+          {['All', '1.0', '2.0', '3.0'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveGalleryTab(tab)}
+              className={`px-4 py-3 md:px-8 rounded-full font-bold transition-all duration-300 text-sm md:text-base ${
+                activeGalleryTab === tab 
+                  ? 'bg-orange text-white shadow-lg shadow-orange/30 scale-105' 
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              }`}
+            >
+              Book2Skills {tab === 'All' ? 'All' : tab}
+            </button>
+          ))}
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
           {[
             { 
-              url: "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=800&q=80",
-              title: "Community Workshop",
-              desc: "Empowering local youth through collaborative problem-solving sessions."
+              url: "https://i.postimg.cc/pdbvPJgp/ymei-11.jpg",
+              title: "Book2Skills 1.0",
+              desc: "The beginning of our journey in youth empowerment.",
+              category: "1.0"
             },
             { 
-              url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80",
-              title: "Mentorship Program",
-              desc: "Connecting industry experts with aspiring young entrepreneurs."
+              url: "https://i.postimg.cc/SKF4mfwj/ymei-12.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Laying the foundation for mindset reorientation.",
+              category: "1.0"
             },
             { 
-              url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
-              title: "Skill Training",
-              desc: "Hands-on vocational training to foster self-reliance and economic growth."
+              url: "https://i.postimg.cc/nLbxnG6h/ymei-13.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Early community engagement and impact.",
+              category: "1.0"
             },
             { 
-              url: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800&q=80",
-              title: "Group Learning",
-              desc: "Fostering a culture of peer-to-peer knowledge sharing."
+              url: "https://i.postimg.cc/LsKSm3r6/ymei-14.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Empowering the first batch of young leaders.",
+              category: "1.0"
             },
             { 
-              url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
-              title: "Youth Empowerment",
-              desc: "Building confidence and leadership skills in the next generation."
+              url: "https://i.postimg.cc/nLbxnG6H/ymei-15.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Skill acquisition workshops in action.",
+              category: "1.0"
             },
             { 
-              url: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
-              title: "Community Outreach",
-              desc: "Direct engagement with underserved communities to identify and address needs."
+              url: "https://i.postimg.cc/YSK7tzJt/ymei-16.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Fostering collaboration and teamwork.",
+              category: "1.0"
+            },
+            { 
+              url: "https://i.postimg.cc/R05mvLj4/ymei-17.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Inspiring hope and future aspirations.",
+              category: "1.0"
+            },
+            { 
+              url: "https://i.postimg.cc/yN4K7ywC/ymei-18.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Educational support and resource distribution.",
+              category: "1.0"
+            },
+            { 
+              url: "https://i.postimg.cc/xdDQ93Wr/ymei-19.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Mentorship sessions with community leaders.",
+              category: "1.0"
+            },
+            { 
+              url: "https://i.postimg.cc/g0FpGH1C/ymei-20.jpg",
+              title: "Book2Skills 1.0",
+              desc: "Celebrating early milestones and successes.",
+              category: "1.0"
+            },
+            { 
+              url: "https://i.postimg.cc/6QJKBfFF/ymei-21.jpg",
+              title: "Book2Skills 1.0",
+              desc: "The impact of our first empowerment initiative.",
+              category: "1.0"
+            },
+            { 
+              url: "https://i.postimg.cc/DyVCzpxr/ymei-1.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Empowering youth through literacy and practical skill acquisition.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/8PhZfdYv/ymei-2.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Interactive learning sessions fostering critical thinking.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/qMfm7D1n/ymei-3.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Hands-on vocational training for future entrepreneurs.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/fT4Hbq80/ymei-4.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Community engagement and youth leadership development.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/65sHQbM4/ymei-5.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Mentorship and career guidance for young minds.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/TY8kPNtK/ymei-6.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Digital literacy and technology empowerment workshops.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/RVrP0pgV/ymei-7.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Creative arts and innovation in community projects.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/bNX6vVmp/ymei-8.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Fostering a culture of reading and continuous learning.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/QxL6MYfX/ymei-9.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Building sustainable futures through education.",
+              category: "2.0"
+            },
+            { 
+              url: "https://i.postimg.cc/BQWhv7ms/ymei-10.jpg",
+              title: "Book2Skills 2.0",
+              desc: "Impactful community outreach and support programs.",
+              category: "2.0"
             }
-          ].map((item, idx) => (
+          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).map((item, idx) => (
             <Reveal key={idx} delay={idx * 0.1}>
-              <div className="group relative overflow-hidden rounded-[2rem] aspect-[4/3] shadow-lg">
+              <motion.div 
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="group relative overflow-hidden rounded-[2rem] aspect-[4/3] shadow-lg"
+              >
                 <img 
                   src={item.url} 
                   alt={item.title} 
@@ -548,9 +738,14 @@ export default function App() {
                   <h4 className="text-white font-bold text-xl mb-2">{item.title}</h4>
                   <p className="text-white/80 text-sm leading-relaxed">{item.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             </Reveal>
           ))}
+          {activeGalleryTab === '3.0' && (
+            <div className="col-span-full py-20 text-center">
+              <p className="text-slate-400 italic">Images for Book2Skills {activeGalleryTab} are coming soon.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -570,115 +765,64 @@ export default function App() {
       </section>
 
       {/* Leadership Structure */}
-      <section id="leadership" className="py-12 md:py-20 px-[8%] bg-light relative overflow-hidden">
-        <Reveal className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4">Leadership Structure</h2>
+      <section id="leadership" className="py-12 md:py-24 px-[8%] bg-white relative overflow-hidden">
+        <Reveal className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4 tracking-tight">Our <span className="text-orange">Leadership Team</span></h2>
           <div className="w-24 h-2 bg-orange mx-auto rounded-full" />
+          <p className="mt-6 text-slate-500 max-w-2xl mx-auto text-sm md:text-lg">
+            Meet the dedicated individuals behind YMEI's mission to empower the next generation.
+          </p>
         </Reveal>
 
-        <div className="max-w-5xl mx-auto">
-          {/* Mobile Layout (Vertical) */}
-          <div className="flex md:hidden flex-col items-center gap-4 relative">
-            <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-navy/10 -translate-x-1/2" />
-            
-            {/* Top Level */}
-            <motion.div 
-              whileHover={{ scale: 1.02 }}
-              className="bg-white text-navy px-5 py-3 rounded-xl text-center shadow-md border-b-4 border-orange relative z-10 w-full max-w-[240px]"
-            >
-              <p className="font-extrabold text-sm mb-0.5">Executive Director</p>
-              <span className="text-orange text-[8px] font-black uppercase tracking-widest">The Visionary</span>
-            </motion.div>
-
-            {/* Second Level */}
-            <div className="flex flex-col gap-3 w-full items-center">
-              {[
-                { name: "Project Lead", role: "Strategy & Execution" },
-                { name: "Policy Lead", role: "Advocacy & Impact" },
-                { name: "Partnership Lead", role: "Growth & Relations" }
-              ].map((node, i) => (
-                <motion.div 
-                  key={i}
-                  whileHover={{ x: 5 }}
-                  className="bg-white text-navy px-4 py-2.5 rounded-lg text-center shadow-sm w-full max-w-[200px] border-l-4 border-navy relative z-10"
-                >
-                  <p className="font-bold text-xs">{node.name}</p>
-                  <span className="text-orange text-[8px] font-bold uppercase tracking-wider">{node.role}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Third Level */}
-            <div className="flex flex-col gap-2 w-full items-center">
-              {[
-                { name: "Program Lead", role: "Curriculum" },
-                { name: "Content Lead", role: "Media" },
-                { name: "M&E Leads", role: "Data" }
-              ].map((node, i) => (
-                <motion.div 
-                  key={i}
-                  className="bg-slate-50 text-navy px-3 py-2 rounded-md text-center shadow-sm w-full max-w-[160px] border border-slate-200 relative z-10"
-                >
-                  <p className="font-bold text-[11px]">{node.name}</p>
-                  <span className="text-orange text-[7px] font-bold uppercase tracking-widest">{node.role}</span>
-                </motion.div>
-              ))}
-            </div>
+        <Reveal delay={0.2} className="max-w-5xl mx-auto">
+          <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-navy/5">
+            <img 
+              src="https://i.postimg.cc/GtZh0nR6/team.jpg" 
+              alt="YMEI Leadership Team" 
+              className="w-full h-auto object-cover"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent pointer-events-none" />
           </div>
+        </Reveal>
+      </section>
 
-          {/* Desktop Layout (Horizontal Tree) */}
-          <div className="hidden md:flex flex-col items-center gap-16">
-            {/* Top Level */}
-            <div className="relative">
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                className="bg-white text-navy px-12 py-8 rounded-[32px] text-center shadow-2xl border-b-8 border-orange relative z-10"
-              >
-                <p className="font-extrabold text-xl mb-1">Executive Director</p>
-                <span className="text-orange text-xs font-black uppercase tracking-widest">The Visionary</span>
-              </motion.div>
-              <div className="absolute top-full left-1/2 w-1 h-16 bg-navy/20 -translate-x-1/2" />
-            </div>
+      {/* Team Members */}
+      <section id="team" className="py-16 md:py-24 px-[8%] bg-slate-50 relative overflow-hidden">
+        <Reveal className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4 tracking-tight">Meet Our <span className="text-orange">Team</span></h2>
+          <div className="w-24 h-2 bg-orange mx-auto rounded-full" />
+          <p className="mt-6 text-slate-500 max-w-2xl mx-auto text-sm md:text-lg">
+            The passionate individuals driving our mission forward every day.
+          </p>
+        </Reveal>
 
-            {/* Second Level */}
-            <div className="flex gap-12 relative">
-              <div className="absolute -top-16 left-0 right-0 h-1 bg-navy/20" />
-              {[
-                { name: "Project Lead", role: "Strategy & Execution" },
-                { name: "Policy Lead", role: "Advocacy & Impact" },
-                { name: "Partnership Lead", role: "Growth & Relations" }
-              ].map((node, i) => (
-                <div key={i} className="relative pt-16">
-                  <div className="absolute top-0 left-1/2 w-1 h-16 bg-navy/20 -translate-x-1/2" />
-                  <motion.div 
-                    whileHover={{ y: -10 }}
-                    className="bg-white text-navy px-8 py-6 rounded-2xl text-center shadow-xl min-w-[200px] border-t-4 border-navy"
-                  >
-                    <p className="font-bold text-lg">{node.name}</p>
-                    <span className="text-orange text-xs font-bold uppercase tracking-wider">{node.role}</span>
-                  </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 max-w-7xl mx-auto">
+          {[
+            { url: "https://i.postimg.cc/JnKc1KYv/ymei-team.jpg", name: "Team Member", role: "Leadership Team" },
+            { url: "https://i.postimg.cc/0QZd8ZXX/ymei-team-2.jpg", name: "Team Member", role: "Project Coordinator" },
+            { url: "https://i.postimg.cc/mDVNbVp8/ymei-team-3.jpg", name: "Team Member", role: "Community Lead" },
+            { url: "https://i.postimg.cc/fL5jw5qH/ymei-team-4.jpg", name: "Team Member", role: "Technical Lead" },
+            { url: "https://i.postimg.cc/W3S62SYG/ymei-team-5.jpg", name: "Team Member", role: "Creative Lead" }
+          ].map((member, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <div className="group bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-100">
+                <div className="aspect-[4/5] overflow-hidden relative">
+                  <img 
+                    src={member.url} 
+                    alt={member.name} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-              ))}
-            </div>
-
-            {/* Third Level */}
-            <div className="flex gap-8">
-              {[
-                { name: "Program Lead", role: "Curriculum" },
-                { name: "Content Lead", role: "Media" },
-                { name: "M&E Leads", role: "Data" }
-              ].map((node, i) => (
-                <motion.div 
-                  key={i}
-                  whileHover={{ y: -5 }}
-                  className="bg-white text-navy px-6 py-5 rounded-xl text-center shadow-lg min-w-[180px] border-b-4 border-slate-100"
-                >
-                  <p className="font-bold">{node.name}</p>
-                  <span className="text-orange text-[10px] font-bold uppercase tracking-widest">{node.role}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                <div className="p-8 text-center">
+                  <h4 className="text-xl font-bold text-navy mb-1">{member.name}</h4>
+                  <p className="text-orange text-xs font-black uppercase tracking-widest">{member.role}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
@@ -760,8 +904,13 @@ export default function App() {
       <footer className="bg-slate-950 pt-24 pb-12 px-[8%] text-slate-400 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           <div className="md:col-span-2">
-            <a href="#" className="text-3xl font-black text-white tracking-tighter mb-8 block">
-              YME<span className="text-orange">I</span>
+            <a href="#" className="mb-8 block transition-transform hover:scale-105">
+              <img 
+                src="https://i.postimg.cc/mZ1XBWyk/ymei_logo.jpg" 
+                alt="YMEI Logo" 
+                className="h-16 w-auto object-contain rounded-xl"
+                referrerPolicy="no-referrer"
+              />
             </a>
             <p className="text-lg leading-relaxed mb-10 max-w-md">
               Empowering underserved Nigerian youth through mindset reorientation, life skills, and entrepreneurial training.
