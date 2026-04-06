@@ -799,11 +799,11 @@ export default function App() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 max-w-7xl mx-auto">
           {[
-            { url: "https://i.postimg.cc/JnKc1KYv/ymei-team.jpg", name: "Team Member", role: "Leadership Team" },
-            { url: "https://i.postimg.cc/0QZd8ZXX/ymei-team-2.jpg", name: "Team Member", role: "Project Coordinator" },
-            { url: "https://i.postimg.cc/mDVNbVp8/ymei-team-3.jpg", name: "Team Member", role: "Community Lead" },
-            { url: "https://i.postimg.cc/fL5jw5qH/ymei-team-4.jpg", name: "Team Member", role: "Technical Lead" },
-            { url: "https://i.postimg.cc/W3S62SYG/ymei-team-5.jpg", name: "Team Member", role: "Creative Lead" }
+            { url: "https://i.postimg.cc/JnKc1KYv/ymei-team.jpg", name: "Group Pictures", role: "Leadership" },
+            { url: "https://i.postimg.cc/0QZd8ZXX/ymei-team-2.jpg", name: "Group Pictures", role: "Leadership" },
+            { url: "https://i.postimg.cc/mDVNbVp8/ymei-team-3.jpg", name: "Group Pictures", role: "Leadership" },
+            { url: "https://i.postimg.cc/fL5jw5qH/ymei-team-4.jpg", name: "Group Pictures", role: "Leadership" },
+            { url: "https://i.postimg.cc/W3S62SYG/ymei-team-5.jpg", name: "Group Pictures", role: "Leadership" }
           ].map((member, i) => (
             <Reveal key={i} delay={i * 0.1}>
               <div className="group bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-100">
