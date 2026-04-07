@@ -573,7 +573,7 @@ export default function App() {
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-navy rounded-full blur-3xl opacity-10" />
             
             <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-2xl shadow-xl z-20 border border-slate-100 min-w-[240px] text-center">
-              <p className="text-navy font-black text-lg">Gracious Oluwagbemiga Opeyemi</p>
+              <p className="text-navy font-black text-lg">Gracious<br>Oluwagbemiga Opeyemi</p>
               <p className="text-orange text-xs font-bold uppercase tracking-widest">Founder & Executive Director</p>
             </div>
           </Reveal>
