@@ -10,7 +10,7 @@ import {
   Facebook, Twitter, Instagram, Linkedin, 
   ArrowRight, Quote, MessageSquare, 
   ChevronUp, Mail, Send, Users, GraduationCap,
-  User
+  User, Play
 } from 'lucide-react';
 
 // --- Components ---
@@ -282,8 +282,8 @@ const TeamCarousel = () => {
   };
 
   return (
-    <div className="relative max-w-7xl mx-auto px-4">
-      <div className="overflow-hidden py-8">
+    <div className="relative max-w-7xl mx-auto px-2 md:px-4">
+      <div className="overflow-hidden py-4 md:py-8">
         <motion.div
           className="flex"
           animate={{ x: `-${currentIndex * (100 / itemsToShow)}%` }}
@@ -292,7 +292,7 @@ const TeamCarousel = () => {
           {team.map((member, i) => (
             <div 
               key={i} 
-              className="px-2 shrink-0"
+              className="px-1 md:px-2 shrink-0"
               style={{ width: `${100 / itemsToShow}%` }}
             >
               <TeamCard {...member} />
@@ -319,6 +319,149 @@ const TeamCarousel = () => {
 
       {/* Dots */}
       <div className="flex justify-center gap-2 mt-4">
+        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentIndex(i)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              i === currentIndex ? "bg-orange w-8" : "bg-slate-200 hover:bg-orange/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const VideoTestimonialCard = ({ title, videoUrl, thumbnail }: { title: string; videoUrl: string; thumbnail: string }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  
+  return (
+    <div className="group relative rounded-[2.5rem] overflow-hidden shadow-2xl bg-white aspect-[9/16] md:aspect-video border border-slate-100 w-full">
+      {!isPlaying ? (
+        <div className="relative w-full h-full cursor-pointer" onClick={() => setIsPlaying(true)}>
+          <img 
+            src={thumbnail} 
+            alt={title} 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-navy/40 group-hover:bg-navy/50 transition-colors flex items-center justify-center">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-orange text-white rounded-full flex items-center justify-center shadow-2xl transform transition-transform group-hover:scale-110">
+              <Play size={32} fill="currentColor" className="ml-1" />
+            </div>
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 bg-gradient-to-t from-navy/90 to-transparent">
+            <h4 className="text-white font-bold text-xl md:text-2xl">{title}</h4>
+            <p className="text-white/70 text-sm mt-1">Click to watch the impact story</p>
+          </div>
+        </div>
+      ) : (
+        <iframe 
+          src={videoUrl} 
+          className="w-full h-full" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowFullScreen
+          title={title}
+        />
+      )}
+    </div>
+  );
+};
+
+const VideoTestimonialCarousel = () => {
+  const videos = [
+    {
+      title: "Transforming Education Through Skills",
+      videoUrl: "https://www.instagram.com/reel/DHVeSGeMCrE/embed/",
+      thumbnail: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Building the Next Generation of Tech Leaders",
+      videoUrl: "https://www.instagram.com/reel/DHVeJPwsV8l/embed/",
+      thumbnail: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Empowering Rural Communities",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      thumbnail: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Digital Literacy for All",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      thumbnail: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Youth Leadership Summit",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      thumbnail: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80"
+    }
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setItemsToShow(2);
+      } else {
+        setItemsToShow(1);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxIndex = videos.length - itemsToShow;
+  
+  const next = () => {
+    setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
+  };
+
+  const prev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
+  };
+
+  return (
+    <div className="relative max-w-7xl mx-auto px-2 md:px-4">
+      <div className="overflow-hidden py-4 md:py-8">
+        <motion.div
+          className="flex"
+          animate={{ x: `-${currentIndex * (100 / itemsToShow)}%` }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        >
+          {videos.map((v, i) => (
+            <div 
+              key={i} 
+              className="px-2 md:px-4 shrink-0"
+              style={{ width: `${100 / itemsToShow}%` }}
+            >
+              <VideoTestimonialCard {...v} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Navigation Controls */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-1 md:-mx-20 pointer-events-none">
+        <button
+          onClick={prev}
+          className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-white shadow-2xl flex items-center justify-center text-navy hover:bg-orange hover:text-white transition-all pointer-events-auto active:scale-90"
+        >
+          <ArrowRight size={20} className="rotate-180 md:w-8 md:h-8" />
+        </button>
+        <button
+          onClick={next}
+          className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-white shadow-2xl flex items-center justify-center text-navy hover:bg-orange hover:text-white transition-all pointer-events-auto active:scale-90"
+        >
+          <ArrowRight size={20} className="md:w-8 md:h-8" />
+        </button>
+      </div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-6">
         {Array.from({ length: maxIndex + 1 }).map((_, i) => (
           <button
             key={i}
@@ -935,6 +1078,25 @@ export default function App() {
         </Reveal>
       </section>
 
+      {/* Video Testimonials */}
+      <section className="py-8 md:py-24 px-4 md:px-[8%] bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+        </div>
+        
+        <Reveal className="text-center mb-8 md:mb-16 relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4 tracking-tight">Voices of <span className="text-orange">Impact</span></h2>
+          <div className="w-24 h-2 bg-orange mx-auto rounded-full" />
+          <p className="mt-6 text-slate-500 max-w-2xl mx-auto text-sm md:text-lg">
+            Watch how our programs are changing lives and creating new opportunities for young Nigerians.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <VideoTestimonialCarousel />
+        </Reveal>
+      </section>
+
       {/* Leadership Structure */}
       <section id="leadership" className="py-12 md:py-24 px-[8%] bg-white relative overflow-hidden">
         <Reveal className="text-center mb-12 md:mb-16">
@@ -959,8 +1121,8 @@ export default function App() {
       </section>
 
       {/* Team Members */}
-      <section id="team" className="py-16 md:py-24 px-[8%] bg-slate-50 relative overflow-hidden">
-        <Reveal className="text-center mb-12 md:mb-16">
+      <section id="team" className="py-10 md:py-24 px-4 md:px-[8%] bg-slate-50 relative overflow-hidden">
+        <Reveal className="text-center mb-8 md:mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-navy mb-4 tracking-tight">Meet Our <span className="text-orange">Team</span></h2>
           <div className="w-24 h-2 bg-orange mx-auto rounded-full" />
           <p className="mt-6 text-slate-500 max-w-2xl mx-auto text-sm md:text-lg">
