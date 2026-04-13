@@ -9,7 +9,8 @@ import {
   Menu, X, Check, MapPin, Phone, 
   Facebook, Twitter, Instagram, Linkedin, 
   ArrowRight, Quote, MessageSquare, 
-  ChevronUp, Mail, Send, Users, GraduationCap
+  ChevronUp, Mail, Send, Users, GraduationCap,
+  User
 } from 'lucide-react';
 
 // --- Components ---
@@ -75,16 +76,13 @@ const Counter = ({ target, label }: { target: number; label: string }) => {
   );
 };
 
-const TestimonialCard = ({ name, role, quote, image }: { name: string; role: string; quote: string; image: string }) => (
+const TestimonialCard = ({ name, role, quote }: { name: string; role: string; quote: string; image: string }) => (
   <div className="bg-white p-6 md:p-8 rounded-[2rem] shadow-xl shadow-black/5 border border-slate-100 flex flex-col h-full relative group transition-all duration-500 mx-2">
     <Quote className="absolute top-6 right-8 text-orange/10 group-hover:text-orange/20 transition-colors" size={40} />
     <div className="flex items-center gap-4 mb-6">
-      <img 
-        src={image} 
-        alt={name} 
-        className="w-12 h-12 rounded-full object-cover border-2 border-orange/20"
-        referrerPolicy="no-referrer"
-      />
+      <div className="w-12 h-12 rounded-full bg-orange/10 flex items-center justify-center text-orange border-2 border-orange/20">
+        <User size={24} />
+      </div>
       <div>
         <h4 className="font-bold text-navy text-base">{name}</h4>
         <p className="text-[10px] text-orange font-bold uppercase tracking-widest">{role}</p>
@@ -513,6 +511,38 @@ export default function App() {
         </motion.div>
       </header>
 
+      {/* Partnership Announcement */}
+      <section className="py-12 md:py-16 px-[8%] bg-navy relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        </div>
+        <div className="max-w-5xl mx-auto relative z-10">
+          <Reveal className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl">
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <div className="shrink-0 w-full md:w-2/5 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10">
+                 <img 
+                   src="https://i.postimg.cc/GhrDDF33/YMEI-Partnership.jpg" 
+                   alt="YMEI Partnership with Pollination" 
+                   className="w-full h-auto object-cover"
+                   referrerPolicy="no-referrer"
+                 />
+              </div>
+              <div className="text-center md:text-left">
+                <div className="inline-block px-4 py-1.5 bg-yellow/20 text-yellow rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6">
+                  Strategic Partnership Announcement
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-6">
+                  Young Minds Empowerment Initiatives (YMEI) is proud to announce a strategic partnership with <span className="text-yellow italic">Pollination</span> under the <span className="text-orange">2025 Flow Funds Grant</span>.
+                </h3>
+                <p className="text-white/60 text-sm md:text-base leading-relaxed">
+                  Supporting the <span className="text-white font-bold">Books2Skills Project</span> - a transformative digital skill acquisition initiative focused on preparing underserved youth for the future of work.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* About */}
       <section id="about" className="py-12 md:py-20 px-[8%] bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-yellow/5 rounded-full blur-3xl -mr-48 -mt-48" />
@@ -573,7 +603,7 @@ export default function App() {
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-navy rounded-full blur-3xl opacity-10" />
             
             <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-2xl shadow-xl z-20 border border-slate-100 min-w-[240px] text-center">
-              <p className="text-navy font-black text-lg">Gracious<br>Oluwagbemiga Opeyemi</p>
+              <p className="text-navy font-black text-lg">Gracious<br />Oluwagbemiga Opeyemi</p>
               <p className="text-orange text-xs font-bold uppercase tracking-widest">Founder & Executive Director</p>
             </div>
           </Reveal>
