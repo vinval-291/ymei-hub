@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef, ReactNode } from 'react';
+import { useState, useEffect, useRef, ReactNode, useMemo } from 'react';
 import { motion, useInView, useAnimation, AnimatePresence } from 'motion/react';
 import { 
   Menu, X, Check, MapPin, Phone, 
@@ -12,6 +12,137 @@ import {
   ChevronUp, Mail, Send, Users, GraduationCap,
   User, Play
 } from 'lucide-react';
+
+// --- Constants ---
+
+const GALLERY_ITEMS = [
+  { 
+    url: "https://i.postimg.cc/pdbvPJgp/ymei-11.jpg",
+    title: "Book2Skills 1.0",
+    desc: "The beginning of our journey in youth empowerment.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/SKF4mfwj/ymei-12.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Laying the foundation for mindset reorientation.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/nLbxnG6h/ymei-13.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Early community engagement and impact.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/LsKSm3r6/ymei-14.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Empowering the first batch of young leaders.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/nLbxnG6H/ymei-15.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Skill acquisition workshops in action.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/YSK7tzJt/ymei-16.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Fostering collaboration and teamwork.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/R05mvLj4/ymei-17.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Inspiring hope and future aspirations.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/yN4K7ywC/ymei-18.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Educational support and resource distribution.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/xdDQ93Wr/ymei-19.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Mentorship sessions with community leaders.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/g0FpGH1C/ymei-20.jpg",
+    title: "Book2Skills 1.0",
+    desc: "Celebrating early milestones and successes.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/6QJKBfFF/ymei-21.jpg",
+    title: "Book2Skills 1.0",
+    desc: "The impact of our first empowerment initiative.",
+    category: "1.0"
+  },
+  { 
+    url: "https://i.postimg.cc/DyVCzpxr/ymei-1.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Empowering youth through literacy and practical skill acquisition.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/8PhZfdYv/ymei-2.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Interactive learning sessions fostering critical thinking.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/qMfm7D1n/ymei-3.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Hands-on vocational training for future entrepreneurs.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/fT4Hbq80/ymei-4.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Community engagement and youth leadership development.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/65sHQbM4/ymei-5.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Mentorship and career guidance for young minds.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/TY8kPNtK/ymei-6.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Digital literacy and technology empowerment workshops.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/RVrP0pgV/ymei-7.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Creative arts and innovation in community projects.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/bNX6vVmp/ymei-8.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Fostering a culture of reading and continuous learning.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/QxL6MYfX/ymei-9.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Building sustainable futures through education.",
+    category: "2.0"
+  },
+  { 
+    url: "https://i.postimg.cc/BQWhv7ms/ymei-10.jpg",
+    title: "Book2Skills 2.0",
+    desc: "Impactful community outreach and support programs.",
+    category: "2.0"
+  }
+];
 
 // --- Components ---
 
@@ -483,6 +614,19 @@ export default function App() {
   const [activeGalleryTab, setActiveGalleryTab] = useState('All');
   const [showAllGallery, setShowAllGallery] = useState(false);
 
+  const filteredGallery = useMemo(() => {
+    let items = [...GALLERY_ITEMS];
+    if (activeGalleryTab === 'All') {
+      // Fisher-Yates shuffle
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      return items;
+    }
+    return items.filter(item => item.category === activeGalleryTab);
+  }, [activeGalleryTab]);
+
   useEffect(() => {
     setShowAllGallery(false);
   }, [activeGalleryTab]);
@@ -876,142 +1020,15 @@ export default function App() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
-          {[
-            { 
-              url: "https://i.postimg.cc/pdbvPJgp/ymei-11.jpg",
-              title: "Book2Skills 1.0",
-              desc: "The beginning of our journey in youth empowerment.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/SKF4mfwj/ymei-12.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Laying the foundation for mindset reorientation.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/nLbxnG6h/ymei-13.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Early community engagement and impact.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/LsKSm3r6/ymei-14.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Empowering the first batch of young leaders.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/nLbxnG6H/ymei-15.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Skill acquisition workshops in action.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/YSK7tzJt/ymei-16.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Fostering collaboration and teamwork.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/R05mvLj4/ymei-17.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Inspiring hope and future aspirations.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/yN4K7ywC/ymei-18.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Educational support and resource distribution.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/xdDQ93Wr/ymei-19.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Mentorship sessions with community leaders.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/g0FpGH1C/ymei-20.jpg",
-              title: "Book2Skills 1.0",
-              desc: "Celebrating early milestones and successes.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/6QJKBfFF/ymei-21.jpg",
-              title: "Book2Skills 1.0",
-              desc: "The impact of our first empowerment initiative.",
-              category: "1.0"
-            },
-            { 
-              url: "https://i.postimg.cc/DyVCzpxr/ymei-1.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Empowering youth through literacy and practical skill acquisition.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/8PhZfdYv/ymei-2.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Interactive learning sessions fostering critical thinking.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/qMfm7D1n/ymei-3.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Hands-on vocational training for future entrepreneurs.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/fT4Hbq80/ymei-4.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Community engagement and youth leadership development.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/65sHQbM4/ymei-5.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Mentorship and career guidance for young minds.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/TY8kPNtK/ymei-6.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Digital literacy and technology empowerment workshops.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/RVrP0pgV/ymei-7.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Creative arts and innovation in community projects.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/bNX6vVmp/ymei-8.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Fostering a culture of reading and continuous learning.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/QxL6MYfX/ymei-9.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Building sustainable futures through education.",
-              category: "2.0"
-            },
-            { 
-              url: "https://i.postimg.cc/BQWhv7ms/ymei-10.jpg",
-              title: "Book2Skills 2.0",
-              desc: "Impactful community outreach and support programs.",
-              category: "2.0"
-            }
-          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).slice(0, showAllGallery ? undefined : 9).map((item, idx) => (
-            <Reveal key={idx} delay={idx * 0.1}>
+          {filteredGallery.slice(0, showAllGallery ? undefined : 9).map((item, idx) => (
+            <Reveal key={`${activeGalleryTab}-${idx}`} delay={idx * 0.1} className="h-full">
               <motion.div 
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
-                className="group relative overflow-hidden rounded-[2rem] aspect-[4/3] shadow-lg"
+                className="group relative overflow-hidden rounded-[2rem] aspect-video shadow-lg w-full h-full bg-slate-100"
               >
                 <img 
                   src={item.url} 
@@ -1034,10 +1051,7 @@ export default function App() {
         </div>
 
         {/* Show All Button */}
-        {!showAllGallery && [
-            { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" },
-            { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }
-          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).length > 9 && (
+        {!showAllGallery && filteredGallery.length > 9 && (
           <div className="flex justify-center mt-12">
             <button 
               onClick={() => setShowAllGallery(true)}
@@ -1048,10 +1062,7 @@ export default function App() {
           </div>
         )}
 
-        {showAllGallery && [
-            { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" }, { category: "1.0" },
-            { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }, { category: "2.0" }
-          ].filter(item => activeGalleryTab === 'All' || item.category === activeGalleryTab).length > 9 && (
+        {showAllGallery && filteredGallery.length > 9 && (
           <div className="flex justify-center mt-12">
             <button 
               onClick={() => setShowAllGallery(false)}
